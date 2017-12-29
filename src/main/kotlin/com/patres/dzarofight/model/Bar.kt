@@ -1,8 +1,11 @@
 package com.patres.dzarofight.model
 
+import com.patres.dzarofight.helper.ColorKeeper
+import com.patres.dzarofight.helper.fill
 import com.patres.dzarofight.helper.format
 import processing.core.PFont
 import processing.core.PVector
+import java.awt.Color
 
 class Bar(
         var board: Board
@@ -51,7 +54,7 @@ class Bar(
     }
 
     private fun drawPointsStatistic() {
-        pApplet.fill(255f, 255f, 255f, 200f)
+        pApplet.fill(Color.WHITE, 200f)
 
         pApplet.text("Hp:     ${board.polandBall.hp.format(2)}", hpPosition.x + textMoveX, hpPosition.y)
         pApplet.text("Points: ${board.statistic.getPoints()}", pointsPosition.x + textMoveX, pointsPosition.y)
@@ -59,7 +62,7 @@ class Bar(
     }
 
     fun drawKillsStatistic() {
-        pApplet.fill(100f, 0f, 0f, 200f)
+        pApplet.fill(ColorKeeper.BLOOD, 200f)
 
         pApplet.image(board.imageKeeper.tusk, tuskPositionImage.x, tuskPositionImage.y - imageSize / 1.25f, imageSize, imageSize)
         pApplet.image(board.imageKeeper.petru, petruPositionImage.x, petruPositionImage.y - imageSize / 1.25f, imageSize, imageSize)
@@ -80,3 +83,4 @@ class Bar(
     }
 
 }
+

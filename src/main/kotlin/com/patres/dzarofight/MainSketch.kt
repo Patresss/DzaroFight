@@ -4,7 +4,6 @@ import com.patres.dzarofight.handler.AudioHandler
 import com.patres.dzarofight.handler.CameraHandler
 import com.patres.dzarofight.helper.ImageKeeper
 import com.patres.dzarofight.helper.fill
-import com.patres.dzarofight.model.Bar
 import com.patres.dzarofight.model.Board
 import ddf.minim.Minim
 import gab.opencv.OpenCV
@@ -58,16 +57,19 @@ class MainSketch : PApplet() {
     }
 
     override fun keyPressed() {
-        when(key) {
+        when (key) {
             ' ' -> board.addNewEnemies(1)
             't' -> cameraHandler.transparentDiffMode = !cameraHandler.transparentDiffMode
             'b' -> cameraHandler.backgroundMode = !cameraHandler.backgroundMode
             'p' -> board.pause = !board.pause
+
         }
     }
 
     override fun mousePressed() {
-        //cameraHandler.mousePressed(mouseX, mouseY)
+        if (board.nextLevelBoard.isInButton()) {
+            board.newLevel = false
+        }
     }
 
     override fun stop() {

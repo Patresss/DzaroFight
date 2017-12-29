@@ -32,3 +32,12 @@ fun Float.format(fracDigits: Int): String {
     df.maximumFractionDigits = fracDigits
     return df.format(this)
 }
+
+fun PApplet.fill(color: Color, alpha: Float) {
+    fill(color.red.toFloat(), color.green.toFloat(), color.blue.toFloat(), alpha)
+}
+
+fun PApplet.stroke(color: Color, alpha: Float) {
+    stroke(color.red.toFloat(), color.green.toFloat(), color.blue.toFloat(), alpha)
+}
+

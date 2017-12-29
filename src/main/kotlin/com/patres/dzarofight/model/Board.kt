@@ -20,27 +20,28 @@ class Board(
 
     val polandBall = PolandBall(board = this)
     val bar = Bar(board = this)
+    val nextLevelBoard = NextLevelBoard(board = this)
     var enemys = ArrayList<Enemy>()
     var lastCreationTime = System.currentTimeMillis()
     var frameSpeedBooster = 60f
     var pause = false
+    var newLevel = false
     var statistic = Statistic()
     val minim = Minim(pApplet)
     var song: AudioPlayer? = null
     var level = Level.LEVEL_1
 
     fun setup() {
-        if(!pause) {
+        if(!pause && !newLevel) {
             updateNumberOfEnemies()
             enemys.removeIf { !it.alive }
             removeTouchedEnemies()
             updateFrameSpeedBooster()
             updatePolandBallHp()
 
-            if(statistic.getPoints() > level.pointsToNextLevel) {
+            if(statistic.getPoints() >= level.pointsToNextLevel) {
                 level = level.getNextLevel()
-                pause = true
-                pApplet.image(imageKeeper.nextLevel, pApplet.width / 2f, pApplet.height / 2f)
+                newLevel = true
             }
         }
     }
@@ -70,12 +71,16 @@ class Board(
 
     fun draw() {
         setup()
-        if(!pause) {
+        if(!pause && !newLevel) {
             move()
         }
-        enemys.forEach { it.draw() }
+        if(newLevel) {
+            nextLevelBoard.draw()
+        } else {
+            enemys.forEach { it.draw() }
+            polandBall.draw()
+        }
         bar.draw()
-        polandBall.draw()
     }
 
     fun move() {
