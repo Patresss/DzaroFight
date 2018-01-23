@@ -1,14 +1,9 @@
 package com.patres.dzarofight.model.enemy
 
-import com.patres.dzarofight.statistic.StatisticEnemy
 import com.patres.dzarofight.model.Board
-import processing.core.PImage
+import com.patres.dzarofight.statistic.StatisticEnemy
 
-class Petru(
-        board: Board,
-        image: PImage = board.imageKeeper.petru,
-        audioFile: String = "audio/petru1.mp3"
-) : Enemy(board = board, image = image, audioFile = audioFile) {
+class Petru(board: Board) : Enemy(board = board, image = board.imageKeeper.petru, audioFile = "audio/petru1.mp3") {
 
     companion object : StatisticEnemy()
 
