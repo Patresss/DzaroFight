@@ -40,7 +40,7 @@ class CameraHandler(
         openCv.erode()
         output = openCv.output.flipVerticalImage()
 
-        when(mode) {
+        when (mode) {
             Mode.BACKGROUND_IMAGE -> drawBackgroundImage()
             Mode.BACKGROUND_CAMERA -> drawImageFromCamera()
             Mode.BACKGROUND_MIX_IMAGE_WITH_CAMERA -> drawImageWithBackground()
@@ -62,12 +62,12 @@ class CameraHandler(
 
     fun saveImageToBackground() {
         backgroundFromCamera = camera.get().flipVerticalImage()
-        backgroundFromCamera.resize(MainSketch.SIZE_X,  MainSketch.SIZE_Y)
+        backgroundFromCamera.resize(MainSketch.SIZE_X, MainSketch.SIZE_Y)
     }
 
     private fun drawImageWithBackground() {
         val image = camera.get().flipVerticalImage()
-        image.resize(MainSketch.SIZE_X,  MainSketch.SIZE_Y)
+        image.resize(MainSketch.SIZE_X, MainSketch.SIZE_Y)
         val imageWithBackground = backgroundImage.copy()
         for (x in 1..image.width) {
             for (y in 1..image.height) {
@@ -86,26 +86,36 @@ class CameraHandler(
                 }
             }
         }
+        addTransparentDiffImage(image)
         pApplet.image(image, 0f, 0f)
     }
 
     private fun drawImageFromCamera() {
         val cameraImage = camera.get().flipVerticalImage()
-        addTransparentDiff(cameraImage)
+        addTransparentDiffCamera(cameraImage)
+        cameraImage.resize(MainSketch.SIZE_X, MainSketch.SIZE_Y)
         pApplet.image(cameraImage, 0f, 0f, MainSketch.SIZE_X.toFloat(), MainSketch.SIZE_Y.toFloat())
     }
 
+    private fun addTransparentDiffCamera(cameraImage: PImage) {
+        if (transparentDiffMode) {
+            drawDiffInImage(cameraImage)
+        }
+    }
+
     private fun drawBackgroundImage() {
-        val image = backgroundImage
-        addTransparentDiff(image)
+        val image = backgroundImage.copy()
+        addTransparentDiffImage(image)
         pApplet.image(image, 0f, board.bar.image.height.toFloat())
     }
 
-    private fun addTransparentDiff(image: PImage) {
+    private fun addTransparentDiffImage(image: PImage) {
         if (transparentDiffMode) {
+            output.resize(MainSketch.SIZE_X, MainSketch.SIZE_Y)
             drawDiffInImage(image)
         }
     }
+
 
     private fun drawDiffInImage(image: PImage) {
         for (x in 1..output.width) {
