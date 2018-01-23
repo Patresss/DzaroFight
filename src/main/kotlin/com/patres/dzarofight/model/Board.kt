@@ -10,9 +10,11 @@ import com.patres.dzarofight.model.enemy.Enemy
 import ddf.minim.AudioPlayer
 import ddf.minim.Minim
 import processing.core.PApplet
+import shiffman.box2d.Box2DProcessing
 
 class Board(
         val pApplet: PApplet,
+        val box2d: Box2DProcessing,
         val imageKeeper: ImageKeeper,
         val cameraHandler: CameraHandler,
         val audioHandler: AudioHandler
@@ -31,7 +33,11 @@ class Board(
     var song: AudioPlayer? = null
     var level = Level.LEVEL_1
 
-    fun setup() {
+    init {
+        addNewEnemies(1)
+    }
+
+    private fun setup() {
         if(!pause && !newLevel) {
             updateNumberOfEnemies()
             enemys.removeIf { !it.alive }
@@ -43,7 +49,13 @@ class Board(
                 level = level.getNextLevel()
                 newLevel = true
             }
+            pApplet.cursor(PApplet.ARROW)
         }
+    }
+
+    fun hit(enemy: Enemy) {
+        enemy.hit()
+        enemys.remove(enemy)
     }
 
     private fun updateNumberOfEnemies() {
@@ -65,7 +77,10 @@ class Board(
 
     private fun removeTouchedEnemies() {
         val touchedEnemies = cameraHandler.getTouchedEnemies(enemys)
-        touchedEnemies.forEach { it.updateStatistic() }
+        touchedEnemies.forEach {
+            it.updateStatistic()
+            it.killBody()
+        }
         enemys.removeIf { touchedEnemies.contains(it) }
     }
 
@@ -84,7 +99,7 @@ class Board(
     }
 
     fun move() {
-        enemys.forEach { it.move() }
+        box2d.step()
     }
 
     fun addNewEnemies(number: Int) {
@@ -94,4 +109,6 @@ class Board(
     }
 
     private fun shouldAddNewEnemy(): Boolean = (System.currentTimeMillis() - lastCreationTime) > level.frequencyOfNewEnemy
+
+
 }

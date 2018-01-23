@@ -35,6 +35,8 @@ dependencies {
     compile files('lib/minim/tritonus_aos.jar')
     compile files('lib/minim/tritonus_share.jar')
     compile files('lib/sound/library/windows64/sound.jar')
+    compile files('lib/box2d_processing/box2d_processing.jar')
+    compile files('lib/box2d_processing/jbox2d-library-2.2.1-ds.jar')
 }
 
 compileKotlin {

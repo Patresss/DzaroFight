@@ -1,7 +1,9 @@
 package com.patres.dzarofight.helper
 
+import org.jbox2d.common.Vec2
 import processing.core.PApplet
 import processing.core.PImage
+import processing.core.PVector
 import java.awt.Color
 import java.text.DecimalFormat
 
@@ -41,3 +43,4 @@ fun PApplet.stroke(color: Color, alpha: Float) {
     stroke(color.red.toFloat(), color.green.toFloat(), color.blue.toFloat(), alpha)
 }
 
+fun Vec2.toPVector() = PVector(x, y)

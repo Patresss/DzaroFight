@@ -5,10 +5,14 @@ import com.patres.dzarofight.handler.CameraHandler
 import com.patres.dzarofight.helper.ImageKeeper
 import com.patres.dzarofight.helper.fill
 import com.patres.dzarofight.model.Board
+import com.patres.dzarofight.model.PolandBall
+import com.patres.dzarofight.model.enemy.Enemy
 import ddf.minim.Minim
 import gab.opencv.OpenCV
+import org.jbox2d.dynamics.contacts.Contact
 import processing.core.PApplet
 import processing.video.Capture
+import shiffman.box2d.Box2DProcessing
 import java.awt.Color
 
 
@@ -26,6 +30,7 @@ class MainSketch : PApplet() {
     private lateinit var board: Board
     private lateinit var imageKeeper: ImageKeeper
     private lateinit var cameraHandler: CameraHandler
+    lateinit var box2d: Box2DProcessing
 
     override fun settings() {
         size(SIZE_X, SIZE_Y)
@@ -33,7 +38,17 @@ class MainSketch : PApplet() {
         val camera = Capture(this, CAMERA_RESOLUTION_WIDTH, CAMERA_RESOLUTION_HEIGHT)
         imageKeeper = ImageKeeper(pApplet = this)
         cameraHandler = CameraHandler(pApplet = this, openCv = openCv, camera = camera)
-        board = Board(pApplet = this, imageKeeper = imageKeeper, cameraHandler = cameraHandler, audioHandler = AudioHandler(Minim(this)))
+        box2d = Box2DProcessing(this).apply {
+            createWorld()
+            setGravity(0f, 0f)
+        }
+        box2d.listenForCollisions()
+        board = Board(
+                pApplet = this,
+                box2d = box2d,
+                imageKeeper = imageKeeper,
+                cameraHandler = cameraHandler,
+                audioHandler = AudioHandler(Minim(this)))
     }
 
     override fun setup() {
@@ -41,6 +56,7 @@ class MainSketch : PApplet() {
     }
 
     override fun draw() {
+
         update()
         cameraHandler.draw()
         board.draw()
@@ -60,9 +76,11 @@ class MainSketch : PApplet() {
         when (key) {
             ' ' -> board.addNewEnemies(1)
             't' -> cameraHandler.transparentDiffMode = !cameraHandler.transparentDiffMode
-            'b' -> cameraHandler.backgroundMode = !cameraHandler.backgroundMode
+            'c' -> cameraHandler.mode = Mode.BACKGROUND_CAMERA
+            'm' -> cameraHandler.mode = Mode.BACKGROUND_MIX_IMAGE_WITH_CAMERA
+            'i' -> cameraHandler.mode = Mode.BACKGROUND_IMAGE
             'p' -> board.pause = !board.pause
-
+            's' -> cameraHandler.saveImageToBackground()
         }
     }
 
@@ -77,6 +95,19 @@ class MainSketch : PApplet() {
 
     fun captureEvent(video: Capture) {
         video.read()
+    }
+
+    fun beginContact(cp: Contact) {
+        val object1 = cp.fixtureA.body.userData
+        val object2 = cp.fixtureB.body.userData
+
+        if (object1 is PolandBall  && object2 is Enemy) {
+            board.hit(object2)
+        }
+    }
+
+    fun endContact(cp: Contact) {
+
     }
 
 }

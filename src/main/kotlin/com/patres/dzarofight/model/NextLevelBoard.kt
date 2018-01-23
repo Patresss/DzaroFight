@@ -31,7 +31,6 @@ class NextLevelBoard(
             pApplet.cursor(PApplet.HAND)
         } else {
             alpha = 50f
-            pApplet.cursor(PApplet.ARROW)
         }
         pApplet.fill(ColorKeeper.BLOOD, alpha)
         pApplet.stroke(ColorKeeper.BLOOD, 50f)

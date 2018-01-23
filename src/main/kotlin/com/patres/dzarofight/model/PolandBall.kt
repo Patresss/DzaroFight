@@ -1,11 +1,16 @@
 package com.patres.dzarofight.model
 
 import com.patres.dzarofight.MainSketch
+import com.patres.dzarofight.helper.FilterMasks
+import org.jbox2d.collision.shapes.CircleShape
+import org.jbox2d.dynamics.Body
+import org.jbox2d.dynamics.BodyDef
+import org.jbox2d.dynamics.BodyType
+import org.jbox2d.dynamics.FixtureDef
 import processing.core.PVector
 
 class PolandBall(
         val board: Board,
-
         val position: PVector = PVector(MainSketch.CAMERA_RESOLUTION_WIDTH / 2f, MainSketch.CAMERA_RESOLUTION_HEIGHT / 2f)
 ) {
     val baseRadius = 30f
@@ -18,11 +23,54 @@ class PolandBall(
     val pApplet = board.pApplet
     val image = board.imageKeeper.polandBallImage
 
+    val box2d = board.box2d
+    lateinit var body: Body
+
+
+    init {
+        makeBody(position.x, position.y, currentRadius)
+    }
+
 
     fun draw() {
-        val scaledX = (position.x - currentRadius) * MainSketch.SCALE_X
-        val scaledY = (position.y - currentRadius) * MainSketch.SCALE_Y
-        val scaledRadius = currentRadius * MainSketch.SCALE_X
-        pApplet.image(image, scaledX, scaledY , scaledRadius * 2, scaledRadius * 2)
+        display()
     }
+
+    fun display() {
+        val pos = box2d.getBodyPixelCoord(body)
+        val scaledX = (pos.x - currentRadius) * MainSketch.SCALE_X
+        val scaledY = (pos.y - currentRadius) * MainSketch.SCALE_Y
+        val scaledRadius = currentRadius * MainSketch.SCALE_X
+        pApplet.run {
+            pushMatrix()
+            translate(scaledX, scaledY)
+            image(image, 0f, 0f, 2f * scaledRadius, 2f * scaledRadius)
+            popMatrix()
+        }
+    }
+
+
+    fun makeBody(x: Float, y: Float, r: Float) {
+        val bd = BodyDef().apply {
+            position = box2d.coordPixelsToWorld(x, y)
+            type = BodyType.STATIC
+        }
+
+        val cs = CircleShape().apply {
+            m_radius = box2d.scalarPixelsToWorld(r)
+        }
+        val fd = FixtureDef().apply {
+            shape = cs
+            density = 10f
+            friction = 0.01f
+            restitution = 0.3f
+            filter.categoryBits = FilterMasks.CATEGORY_POLAND_BALL
+            filter.maskBits  = FilterMasks.MASK_POLAND_BALL
+        }
+        body = box2d.world.createBody(bd).apply {
+            createFixture(fd)
+        }
+        body.userData = this
+    }
+
 }

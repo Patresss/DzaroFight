@@ -1,6 +1,7 @@
 package com.patres.dzarofight.model.enemy
 
 import com.patres.dzarofight.MainSketch
+import com.patres.dzarofight.helper.FilterMasks
 import com.patres.dzarofight.helper.RandomGenerator
 import com.patres.dzarofight.helper.toPVector
 import com.patres.dzarofight.model.Board
@@ -18,7 +19,6 @@ import processing.core.PVector
 
 abstract class Enemy(
         val board: Board,
-        val radius: Float = 12f,
         var position: PVector = RandomGenerator.generatePVectorOnBorder(MainSketch.CAMERA_RESOLUTION_WIDTH, MainSketch.CAMERA_RESOLUTION_HEIGHT, radius),
         val speed: Float = 0.1f,
         val image: PImage,
@@ -52,9 +52,10 @@ abstract class Enemy(
             density = 10f
             friction = 0.01f
             restitution = 0.3f
+            filter.categoryBits = FilterMasks.CATEGORY_ENEMY
+            filter.maskBits  = FilterMasks.MASK_ENEMY
         }
         body = box2d.world.createBody(bd).apply {
-            isBullet = true
             createFixture(fd)
             linearVelocity = destinationPositionSpeed
         }
@@ -68,7 +69,7 @@ abstract class Enemy(
         pApplet.run {
             pushMatrix()
             translate(scaledX, scaledY)
-            image(image, -scaledRadius, -scaledRadius, scaledRadius * 2, scaledRadius * 2)
+            image(image, -image.width / 2f, -image.height / 2f)
             popMatrix()
         }
     }

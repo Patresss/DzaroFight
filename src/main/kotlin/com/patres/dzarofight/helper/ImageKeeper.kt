@@ -1,5 +1,8 @@
 package com.patres.dzarofight.helper
 
+import com.patres.dzarofight.MainSketch
+import com.patres.dzarofight.model.enemy.Enemy
+import com.patres.dzarofight.model.enemy.Tusk
 import processing.core.PApplet
 import processing.core.PImage
 
@@ -17,6 +20,22 @@ class ImageKeeper(val pApplet: PApplet) {
     val korwin: PImage = pApplet.loadImage("img/korwin.png") ?: PImage()
     val kijowski: PImage = pApplet.loadImage("img/kijowski.png") ?: PImage()
     val schetyna: PImage = pApplet.loadImage("img/schetyna.png") ?: PImage()
+
+    init {
+        barImage.resize(MainSketch.SIZE_X,(MainSketch.SIZE_Y * 0.1259).toInt())
+        background.resize(MainSketch.SIZE_X,MainSketch.SIZE_Y)
+        resizeEnemy(tusk, Tusk.radius)
+        resizeEnemy(petru, Tusk.radius)
+        resizeEnemy(kukiz, Tusk.radius)
+        resizeEnemy(korwin, Tusk.radius)
+        resizeEnemy(kijowski, Tusk.radius)
+        resizeEnemy(schetyna, Tusk.radius)
+    }
+
+    private fun resizeEnemy(image: PImage,  radius: Float) {
+        val scaledRadius = (radius.toInt() * 2 * MainSketch.SCALE_Y).toInt()
+        image.resize(scaledRadius, scaledRadius)
+    }
 
 
 }

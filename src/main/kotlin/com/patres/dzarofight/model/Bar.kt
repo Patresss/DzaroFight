@@ -1,40 +1,35 @@
 package com.patres.dzarofight.model
 
+import com.patres.dzarofight.MainSketch
 import com.patres.dzarofight.helper.ColorKeeper
 import com.patres.dzarofight.helper.fill
 import com.patres.dzarofight.helper.format
 import processing.core.PFont
 import processing.core.PVector
 import java.awt.Color
+import java.lang.Float.min
 
 class Bar(
         var board: Board
 ) {
 
     companion object {
-        val fontSize = 35f
-        val imageSize = 35f
-        val textMargin = 20f
-        val textMoveX = imageSize + textMargin
-        val textMoveY = imageSize / 2.5f
+        val fontSize = min((0.032 * MainSketch.SIZE_Y).toFloat(), (0.0182 * MainSketch.SIZE_X).toFloat())
+        val imageSize = min((0.032 * MainSketch.SIZE_Y).toFloat(), (0.0182 * MainSketch.SIZE_X).toFloat())
 
-        val pointsColumn = 700f
-        val killsColumn1 = 1100f
-        val killsColumn2 = 1220f
+        val pointsColumn = (0.4 * MainSketch.SIZE_X).toFloat()
+        val killsColumn1Image = (0.69 * MainSketch.SIZE_X).toFloat()
+        val killsColumn1Text = (0.72 * MainSketch.SIZE_X).toFloat()
+        val killsColumn2Image = (0.76 * MainSketch.SIZE_X).toFloat()
+        val killsColumn2Text = (0.79 * MainSketch.SIZE_X).toFloat()
 
-        val row1 = 40f
-        val row2 = 80f
-        val row3 = 120f
+        val row1 = (0.037 * MainSketch.SIZE_Y).toFloat()
+        val row1Img = row1 - imageSize * 0.8f
+        val row2 = (0.074 * MainSketch.SIZE_Y).toFloat()
+        val row2Img = row2 - imageSize * 0.8f
+        val row3 = (0.111 * MainSketch.SIZE_Y).toFloat()
+        val row3Img = row3 - imageSize * 0.8f
 
-        val hpPosition = PVector(pointsColumn, row1)
-        val pointsPosition = PVector(pointsColumn, row2)
-        val moneyPosition = PVector(pointsColumn, row3)
-        val tuskPositionImage = PVector(killsColumn1, row1)
-        val petruPositionImage = PVector(killsColumn1, row2)
-        val kukizPositionImage = PVector(killsColumn1, row3)
-        val korwinPositionImage = PVector(killsColumn2, row1)
-        val kijowskiPositionImage = PVector(killsColumn2, row2)
-        val schetynaPositionImage = PVector(killsColumn2, row3)
     }
 
     var position = PVector(0f, 0f)
@@ -56,30 +51,30 @@ class Bar(
     private fun drawPointsStatistic() {
         pApplet.fill(Color.WHITE, 200f)
 
-        pApplet.text("Hp:     ${board.polandBall.hp.format(2)}", hpPosition.x + textMoveX, hpPosition.y)
-        pApplet.text("Points: ${board.statistic.getPoints()}", pointsPosition.x + textMoveX, pointsPosition.y)
-        pApplet.text("Money:  ${board.statistic.getMoney()}", moneyPosition.x + textMoveX, moneyPosition.y)
+        pApplet.text("Hp:     ${board.polandBall.hp.format(2)}", pointsColumn, row1)
+        pApplet.text("Points: ${board.statistic.getPoints()}", pointsColumn, row2)
+        pApplet.text("Money:  ${board.statistic.getMoney()}", pointsColumn, row3)
     }
 
     fun drawKillsStatistic() {
         pApplet.fill(ColorKeeper.BLOOD, 200f)
 
-        pApplet.image(board.imageKeeper.tusk, tuskPositionImage.x, tuskPositionImage.y - imageSize / 1.25f, imageSize, imageSize)
-        pApplet.image(board.imageKeeper.petru, petruPositionImage.x, petruPositionImage.y - imageSize / 1.25f, imageSize, imageSize)
-        pApplet.image(board.imageKeeper.kukiz, kukizPositionImage.x, kukizPositionImage.y - imageSize / 1.25f, imageSize, imageSize)
+        pApplet.image(board.imageKeeper.tusk, killsColumn1Image, row1Img, imageSize, imageSize)
+        pApplet.image(board.imageKeeper.petru, killsColumn1Image, row2Img, imageSize, imageSize)
+        pApplet.image(board.imageKeeper.kukiz, killsColumn1Image, row3Img, imageSize, imageSize)
 
-        pApplet.text("${board.statistic.tuskKill}", tuskPositionImage.x + textMoveX, tuskPositionImage.y)
-        pApplet.text("${board.statistic.petruKill}", petruPositionImage.x + textMoveX, petruPositionImage.y)
-        pApplet.text("${board.statistic.kukizKill}", kukizPositionImage.x + textMoveX, kukizPositionImage.y)
+        pApplet.text("${board.statistic.tuskKill}", killsColumn1Text, row1)
+        pApplet.text("${board.statistic.petruKill}", killsColumn1Text, row2)
+        pApplet.text("${board.statistic.kukizKill}", killsColumn1Text, row3)
 
 
-        pApplet.image(board.imageKeeper.korwin, korwinPositionImage.x, korwinPositionImage.y - imageSize / 1.25f, imageSize, imageSize)
-        pApplet.image(board.imageKeeper.kijowski, kijowskiPositionImage.x, kijowskiPositionImage.y - imageSize / 1.25f, imageSize, imageSize)
-        pApplet.image(board.imageKeeper.schetyna, schetynaPositionImage.x, schetynaPositionImage.y - imageSize / 1.25f, imageSize, imageSize)
+        pApplet.image(board.imageKeeper.korwin, killsColumn2Image, row1Img, imageSize, imageSize)
+        pApplet.image(board.imageKeeper.kijowski, killsColumn2Image, row2Img, imageSize, imageSize)
+        pApplet.image(board.imageKeeper.schetyna, killsColumn2Image, row3Img, imageSize, imageSize)
 
-        pApplet.text("${board.statistic.korwinKill}", korwinPositionImage.x + textMoveX, korwinPositionImage.y)
-        pApplet.text("${board.statistic.kijowskiKill}", kijowskiPositionImage.x + textMoveX, kijowskiPositionImage.y)
-        pApplet.text("${board.statistic.schetynaKill}", schetynaPositionImage.x + textMoveX, schetynaPositionImage.y)
+        pApplet.text("${board.statistic.korwinKill}", killsColumn2Text, row1)
+        pApplet.text("${board.statistic.kijowskiKill}", killsColumn2Text, row2)
+        pApplet.text("${board.statistic.schetynaKill}", killsColumn2Text, row3)
     }
 
 }

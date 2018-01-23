@@ -5,7 +5,7 @@ enum class Level(
         val pointsToNextLevel: Int,
         val frequencyOfNewEnemy: Int
 ) {
-    LEVEL_1(1, 3, 2000),
+    LEVEL_1(1, 3000, 200),
     LEVEL_2(2, 10, 1500),
     LEVEL_3(3, 25, 1000),
     LEVEL_4(4, 50, 750),
