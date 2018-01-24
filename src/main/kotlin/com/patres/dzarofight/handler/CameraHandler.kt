@@ -23,7 +23,7 @@ class CameraHandler(
     lateinit var board: Board
     private var backgroundFromCamera: PImage = PImage()
     private var output = openCv.output.flipVerticalImage()
-    private var acceptableCover: Double = 0.01
+    private var acceptableCover: Double = 0.0
 
     fun setup(board: Board) {
         this.board = board
@@ -97,31 +97,33 @@ class CameraHandler(
         pApplet.image(cameraImage, 0f, 0f, MainSketch.SIZE_X.toFloat(), MainSketch.SIZE_Y.toFloat())
     }
 
+    private fun drawBackgroundImage() {
+        val image = backgroundImage.copy()
+        addTransparentDiffImage(image)
+        pApplet.image(image, 0f, 0f)
+    }
+
+
     private fun addTransparentDiffCamera(cameraImage: PImage) {
         if (transparentDiffMode) {
             drawDiffInImage(cameraImage)
         }
     }
 
-    private fun drawBackgroundImage() {
-        val image = backgroundImage.copy()
-        addTransparentDiffImage(image)
-        pApplet.image(image, 0f, board.bar.image.height.toFloat())
-    }
-
     private fun addTransparentDiffImage(image: PImage) {
         if (transparentDiffMode) {
-            output.resize(MainSketch.SIZE_X, MainSketch.SIZE_Y)
-            drawDiffInImage(image)
+            val outputResized = output.copy()
+            outputResized.resize(MainSketch.SIZE_X, MainSketch.SIZE_Y)
+            drawDiffInImage(image, outputResized)
         }
     }
 
 
-    private fun drawDiffInImage(image: PImage) {
-        for (x in 1..output.width) {
-            for (y in 1..output.height) {
-                if (pApplet.brightness(output.get(x, y)) >= 100) {
-                    image.set(x, y, output.get(x, y))
+    private fun drawDiffInImage(image: PImage, outputImage: PImage = output) {
+        for (x in 1..outputImage.width) {
+            for (y in 1..outputImage.height) {
+                if (pApplet.brightness(outputImage.get(x, y)) >= 100) {
+                    image.set(x, y, outputImage.get(x, y))
                 }
             }
         }
