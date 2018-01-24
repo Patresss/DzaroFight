@@ -16,7 +16,7 @@ class PolandBall(
 ) {
     val baseRadius = 30f
     var currentRadius = baseRadius
-    var hp = 100f
+    var hp = 10f
         set(value) {
             if(value <= 0f) {
                 board.gameMode = ModeGame.LOSE
