@@ -7,6 +7,7 @@ import com.patres.dzarofight.handler.CameraHandler
 import com.patres.dzarofight.helper.ImageKeeper
 import com.patres.dzarofight.helper.RandomGenerator
 import com.patres.dzarofight.model.enemy.Enemy
+import com.patres.dzarofight.model.friends.Pawlowicz
 import ddf.minim.AudioPlayer
 import ddf.minim.Minim
 import processing.core.PApplet
@@ -32,6 +33,8 @@ class Board(
     val minim = Minim(pApplet)
     var song: AudioPlayer? = null
     var level = Level.LEVEL_1
+
+    var pawlowicz = Pawlowicz(this)
 
     init {
         addNewEnemies(1)
@@ -94,6 +97,7 @@ class Board(
         } else {
             enemys.forEach { it.draw() }
             polandBall.draw()
+            pawlowicz.draw()
         }
         bar.draw()
     }

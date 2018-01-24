@@ -2,7 +2,7 @@ group = "com.patres"
 version = "1.0-SNAPSHOT"
 
 buildscript {
-    ext.kotlin_version = '1.2.10'
+    ext.kotlin_version = '1.2.21'
 
     repositories {
         mavenCentral()
@@ -19,8 +19,12 @@ repositories {
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     compile group: 'org.openpnp', name: 'opencv', version: '3.2.0-0'
+    compile group: 'net.java.jinput', name: 'jinput', version: '2.0.5'
+// https://mvnrepository.com/artifact/net.java.jinput/jinput-platform
+    compile group: 'net.java.jinput', name: 'jinput-platform', version: '2.0.6', ext: 'pom'
+
     compile files('lib/core/library/core.jar')
     compile files('lib/opencv_processing/opencv-245.jar')
     compile files('lib/video/video.jar')
@@ -37,6 +41,7 @@ dependencies {
     compile files('lib/sound/library/windows64/sound.jar')
     compile files('lib/box2d_processing/box2d_processing.jar')
     compile files('lib/box2d_processing/jbox2d-library-2.2.1-ds.jar')
+    compile files('lib/GameControlPlus/library/GameControlPlus.jar')
 }
 
 compileKotlin {

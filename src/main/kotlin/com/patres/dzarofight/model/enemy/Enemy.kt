@@ -65,7 +65,6 @@ abstract class Enemy(
     fun display() {
         val scaledX = (position.x) * MainSketch.SCALE_X
         val scaledY = (position.y) * MainSketch.SCALE_Y
-        val scaledRadius = radius * MainSketch.SCALE_X
         pApplet.run {
             pushMatrix()
             translate(scaledX, scaledY)

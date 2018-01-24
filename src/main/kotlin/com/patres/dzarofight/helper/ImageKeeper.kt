@@ -1,8 +1,7 @@
 package com.patres.dzarofight.helper
 
 import com.patres.dzarofight.MainSketch
-import com.patres.dzarofight.model.enemy.Enemy
-import com.patres.dzarofight.model.enemy.Tusk
+import com.patres.dzarofight.model.enemy.*
 import processing.core.PApplet
 import processing.core.PImage
 
@@ -21,18 +20,23 @@ class ImageKeeper(val pApplet: PApplet) {
     val kijowski: PImage = pApplet.loadImage("img/kijowski.png") ?: PImage()
     val schetyna: PImage = pApplet.loadImage("img/schetyna.png") ?: PImage()
 
+    val pawlowicz: PImage = pApplet.loadImage("img/pawłowicz.png") ?: PImage()
+
     init {
-        barImage.resize(MainSketch.SIZE_X,(MainSketch.SIZE_Y * 0.1259).toInt())
-        background.resize(MainSketch.SIZE_X,MainSketch.SIZE_Y)
+        barImage.resize(MainSketch.SIZE_X, (MainSketch.SIZE_Y * 0.1259).toInt())
+        background.resize(MainSketch.SIZE_X, MainSketch.SIZE_Y)
+        nextLevel.resize((MainSketch.SIZE_X * 0.41).toInt(), (MainSketch.SIZE_Y * 0.37).toInt())
         resizeEnemy(tusk, Tusk.radius)
-        resizeEnemy(petru, Tusk.radius)
-        resizeEnemy(kukiz, Tusk.radius)
-        resizeEnemy(korwin, Tusk.radius)
-        resizeEnemy(kijowski, Tusk.radius)
-        resizeEnemy(schetyna, Tusk.radius)
+        resizeEnemy(petru, Petru.radius)
+        resizeEnemy(kukiz, Kukiz.radius)
+        resizeEnemy(korwin, Korwin.radius)
+        resizeEnemy(kijowski, Kijowski.radius)
+        resizeEnemy(schetyna, Schetyna.radius)
+
+        resizeEnemy(pawlowicz, Tusk.radius)
     }
 
-    private fun resizeEnemy(image: PImage,  radius: Float) {
+    private fun resizeEnemy(image: PImage, radius: Float) {
         val scaledRadius = (radius.toInt() * 2 * MainSketch.SCALE_Y).toInt()
         image.resize(scaledRadius, scaledRadius)
     }
