@@ -19,24 +19,24 @@ class PolandBall(
         set(value) {
             field = value
             currentRadius = baseRadius * hp / 100f
+            updateShapeRadius()
         }
     val pApplet = board.pApplet
     val image = board.imageKeeper.polandBallImage
 
-    val box2d = board.box2d
-    lateinit var body: Body
+    private val box2d = board.box2d
+    private lateinit var body: Body
 
 
     init {
         makeBody(position.x, position.y, currentRadius)
     }
 
-
     fun draw() {
         display()
     }
 
-    fun display() {
+    private fun display() {
         val pos = box2d.getBodyPixelCoord(body)
         val scaledX = (pos.x - currentRadius) * MainSketch.SCALE_X
         val scaledY = (pos.y - currentRadius) * MainSketch.SCALE_Y
@@ -50,27 +50,32 @@ class PolandBall(
     }
 
 
-    fun makeBody(x: Float, y: Float, r: Float) {
+    private fun makeBody(x: Float, y: Float, r: Float) {
         val bd = BodyDef().apply {
             position = box2d.coordPixelsToWorld(x, y)
             type = BodyType.STATIC
         }
 
-        val cs = CircleShape().apply {
+        val circleShape = CircleShape().apply {
             m_radius = box2d.scalarPixelsToWorld(r)
         }
         val fd = FixtureDef().apply {
-            shape = cs
+            shape = circleShape
             density = 10f
             friction = 0.01f
             restitution = 0.3f
             filter.categoryBits = FilterMasks.CATEGORY_POLAND_BALL
-            filter.maskBits  = FilterMasks.MASK_POLAND_BALL
+            filter.maskBits = FilterMasks.MASK_POLAND_BALL
         }
         body = box2d.world.createBody(bd).apply {
             createFixture(fd)
         }
         body.userData = this
     }
+
+    private fun updateShapeRadius() {
+        body.fixtureList.shape.m_radius = box2d.scalarPixelsToWorld(currentRadius)
+    }
+
 
 }

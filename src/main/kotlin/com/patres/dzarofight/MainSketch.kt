@@ -20,8 +20,8 @@ import java.awt.Color
 class MainSketch : PApplet() {
 
     companion object {
-        val SIZE_X = 640
-        val SIZE_Y = 480
+        val SIZE_X = 1920
+        val SIZE_Y = 1080
         val CAMERA_RESOLUTION_WIDTH = 640
         val CAMERA_RESOLUTION_HEIGHT = 480
         val SCALE_X = SIZE_X.toFloat() / CAMERA_RESOLUTION_WIDTH.toFloat()
