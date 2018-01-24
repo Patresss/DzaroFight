@@ -25,7 +25,10 @@ class GamePadHandler(val board: Board) {
                     component.name.contains("1") -> board.pawlowicz.moveRight()
                     component.name.contains("2") -> board.pawlowicz.moveDown()
                     component.name.contains("3") -> board.pawlowicz.moveLeft()
-                    component.name.contains("4") -> board.pawlowicz = Pawlowicz(board)
+                    component.name.contains("4") -> {
+                        board.pawlowicz.killBody()
+                        board.pawlowicz = Pawlowicz(board)
+                    }
                     component.name.contains("5") -> board.pawlowicz.stop()
                 }
             }

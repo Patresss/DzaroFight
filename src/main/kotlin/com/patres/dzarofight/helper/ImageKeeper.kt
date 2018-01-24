@@ -12,6 +12,8 @@ class ImageKeeper(val pApplet: PApplet) {
     val background: PImage = pApplet.loadImage("img/background.png") ?: PImage()
 
     val nextLevel: PImage = pApplet.loadImage("img/next-level.png") ?: PImage()
+    val youLose: PImage = pApplet.loadImage("img/you-lose.png") ?: PImage()
+    val youWon: PImage = pApplet.loadImage("img/you-won.png") ?: PImage()
 
     val tusk: PImage = pApplet.loadImage("img/tusk.png") ?: PImage()
     val petru: PImage = pApplet.loadImage("img/petru.png") ?: PImage()
@@ -25,7 +27,11 @@ class ImageKeeper(val pApplet: PApplet) {
     init {
         barImage.resize(MainSketch.SIZE_X, (MainSketch.SIZE_Y * 0.1259).toInt())
         background.resize(MainSketch.SIZE_X, MainSketch.SIZE_Y)
-        nextLevel.resize((MainSketch.SIZE_X * 0.41).toInt(), (MainSketch.SIZE_Y * 0.37).toInt())
+
+        resizeOptionBoard(nextLevel)
+        resizeOptionBoard(youLose)
+        resizeOptionBoard(youWon)
+
         resizeEnemy(tusk, Tusk.radius)
         resizeEnemy(petru, Petru.radius)
         resizeEnemy(kukiz, Kukiz.radius)
@@ -41,5 +47,8 @@ class ImageKeeper(val pApplet: PApplet) {
         image.resize(scaledRadius, scaledRadius)
     }
 
+    private fun resizeOptionBoard(image: PImage) {
+        image.resize((MainSketch.SIZE_X * 0.41).toInt(), (MainSketch.SIZE_Y * 0.37).toInt())
+    }
 
 }

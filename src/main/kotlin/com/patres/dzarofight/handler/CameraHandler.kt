@@ -1,7 +1,7 @@
 package com.patres.dzarofight.handler
 
 import com.patres.dzarofight.MainSketch
-import com.patres.dzarofight.Mode
+import com.patres.dzarofight.ModeBackground
 import com.patres.dzarofight.helper.flipVerticalImage
 import com.patres.dzarofight.model.Board
 import com.patres.dzarofight.model.enemy.Enemy
@@ -17,7 +17,7 @@ class CameraHandler(
         var pApplet: PApplet
 ) {
 
-    var mode = Mode.BACKGROUND_IMAGE
+    var mode = ModeBackground.BACKGROUND_IMAGE
     var transparentDiffMode = false
     lateinit var backgroundImage: PImage
     lateinit var board: Board
@@ -41,9 +41,9 @@ class CameraHandler(
         output = openCv.output.flipVerticalImage()
 
         when (mode) {
-            Mode.BACKGROUND_IMAGE -> drawBackgroundImage()
-            Mode.BACKGROUND_CAMERA -> drawImageFromCamera()
-            Mode.BACKGROUND_MIX_IMAGE_WITH_CAMERA -> drawImageWithBackground()
+            ModeBackground.BACKGROUND_IMAGE -> drawBackgroundImage()
+            ModeBackground.BACKGROUND_CAMERA -> drawImageFromCamera()
+            ModeBackground.BACKGROUND_MIX_IMAGE_WITH_CAMERA -> drawImageWithBackground()
         }
 
     }

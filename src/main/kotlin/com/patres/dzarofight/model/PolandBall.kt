@@ -1,6 +1,7 @@
 package com.patres.dzarofight.model
 
 import com.patres.dzarofight.MainSketch
+import com.patres.dzarofight.ModeGame
 import com.patres.dzarofight.helper.FilterMasks
 import org.jbox2d.collision.shapes.CircleShape
 import org.jbox2d.dynamics.Body
@@ -15,11 +16,16 @@ class PolandBall(
 ) {
     val baseRadius = 30f
     var currentRadius = baseRadius
-    var hp = 100f
+    var hp = 10f
         set(value) {
-            field = value
-            currentRadius = baseRadius * hp / 100f
-            updateShapeRadius()
+            if(value <= 0f) {
+                board.gameMode = ModeGame.LOSE
+                field = 0f
+            } else {
+                field = value
+                currentRadius = baseRadius * hp / 100f
+                updateShapeRadius()
+            }
         }
     val pApplet = board.pApplet
     val image = board.imageKeeper.polandBallImage
