@@ -42,8 +42,8 @@ class Pawlowicz(
             density = 10f
             friction = 0.01f
             restitution = 0.3f
-            filter.categoryBits = FilterMasks.CATEGORY_ENEMY
-            filter.maskBits  = FilterMasks.MASK_ENEMY
+            filter.categoryBits = FilterMasks.CATEGORY_FRIEND
+            filter.maskBits  = FilterMasks.MASK_FRIEND
         }
         body = box2d.world.createBody(bodyDef).apply {
             createFixture(fd)
@@ -60,6 +60,10 @@ class Pawlowicz(
             image(image, -image.width / 2f, -image.height / 2f)
             popMatrix()
         }
+    }
+
+    fun killBody() {
+        box2d.destroyBody(body)
     }
 
     fun draw() {

@@ -8,6 +8,7 @@ import com.patres.dzarofight.helper.fill
 import com.patres.dzarofight.model.Board
 import com.patres.dzarofight.model.PolandBall
 import com.patres.dzarofight.model.enemy.Enemy
+import com.patres.dzarofight.model.friends.Pawlowicz
 import ddf.minim.Minim
 import gab.opencv.OpenCV
 import org.jbox2d.dynamics.contacts.Contact
@@ -20,12 +21,12 @@ import java.awt.Color
 class MainSketch : PApplet() {
 
     companion object {
-        val SIZE_X = 1920
-        val SIZE_Y = 1080
-        val CAMERA_RESOLUTION_WIDTH = 640
-        val CAMERA_RESOLUTION_HEIGHT = 480
-        val SCALE_X = SIZE_X.toFloat() / CAMERA_RESOLUTION_WIDTH.toFloat()
-        val SCALE_Y = SIZE_Y.toFloat() / CAMERA_RESOLUTION_HEIGHT.toFloat()
+        const val SIZE_X = 1920
+        const val SIZE_Y = 1080
+        const val CAMERA_RESOLUTION_WIDTH = 640
+        const val CAMERA_RESOLUTION_HEIGHT = 480
+        const val SCALE_X = SIZE_X.toFloat() / CAMERA_RESOLUTION_WIDTH.toFloat()
+        const val SCALE_Y = SIZE_Y.toFloat() / CAMERA_RESOLUTION_HEIGHT.toFloat()
     }
 
     private lateinit var board: Board
@@ -51,19 +52,12 @@ class MainSketch : PApplet() {
         }
         box2d.listenForCollisions()
         minim = Minim(this)
-        board = Board(
-                pApplet = this,
-                box2d = box2d,
-                imageKeeper = imageKeeper,
-                cameraHandler = cameraHandler,
-                audioHandler = AudioHandler(minim))
+        board = getNewBoard()
     }
 
     override fun setup() {
         cameraHandler.setup(board)
         gamePadHandler = GamePadHandler(board)
-
-
     }
 
     override fun draw() {
@@ -91,18 +85,35 @@ class MainSketch : PApplet() {
                 board.addNewEnemies(1)
             }
             't' -> cameraHandler.transparentDiffMode = !cameraHandler.transparentDiffMode
-            'c' -> cameraHandler.mode = Mode.BACKGROUND_CAMERA
-            'm' -> cameraHandler.mode = Mode.BACKGROUND_MIX_IMAGE_WITH_CAMERA
-            'i' -> cameraHandler.mode = Mode.BACKGROUND_IMAGE
+            'c' -> cameraHandler.mode = ModeBackground.BACKGROUND_CAMERA
+            'm' -> cameraHandler.mode = ModeBackground.BACKGROUND_MIX_IMAGE_WITH_CAMERA
+            'i' -> cameraHandler.mode = ModeBackground.BACKGROUND_IMAGE
             'p' -> board.pause = !board.pause
             's' -> cameraHandler.saveImageToBackground()
         }
     }
 
     override fun mousePressed() {
-        if (board.nextLevelBoard.isInButton()) {
-            board.newLevel = false
+        if (board.gameMode == ModeGame.NEXT_LEVEL && board.nextLevelBoard.isInButton()) {
+            board.gameMode = ModeGame.GAME
+            board.pause = false
         }
+
+        if ((board.gameMode == ModeGame.LOSE || board.gameMode == ModeGame.WON) && board.losePopup.isInButton()) {
+            board = getNewBoard()
+            cameraHandler.setup(board)
+            gamePadHandler = GamePadHandler(board)
+        }
+    }
+
+    private fun getNewBoard(): Board {
+        return Board(
+                pApplet = this,
+                box2d = box2d,
+                imageKeeper = imageKeeper,
+                cameraHandler = cameraHandler,
+                audioHandler = AudioHandler(minim))
+
     }
 
     override fun stop() {
@@ -121,10 +132,14 @@ class MainSketch : PApplet() {
         if (object1 is PolandBall && object2 is Enemy) {
             board.hit(object2)
         }
+
+        if (object1 is Pawlowicz && object2 is Enemy) {
+            board.removeEnemies(object2)
+        }
+
     }
 
     fun endContact(cp: Contact) {
-
     }
 
     fun keyEvent() {

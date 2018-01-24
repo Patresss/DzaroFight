@@ -6,6 +6,7 @@ class ColorKeeper {
 
     companion object {
         val BLOOD: Color = Color(100, 0, 0)
+        val GRAY: Color = Color(100, 100, 100)
     }
 
 }

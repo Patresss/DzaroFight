@@ -14,8 +14,7 @@ enum class Level(
     LEVEL_7(7, 250, 400),
     LEVEL_8(8, 500, 300),
     LEVEL_9(9, 750, 200),
-    LEVEL_10(10, 1000, 100),
-    LEVEL_FINAL(11, 10000, 100);
+    LEVEL_FINAL(10, 1000, 100);
 
     fun getNextLevel(): Level {
         val nextLevelCounter = this.counterLevel + 1
