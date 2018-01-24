@@ -19,7 +19,7 @@ class CameraHandler(
 
     var mode = ModeBackground.BACKGROUND_IMAGE
     var transparentDiffMode = false
-    lateinit var backgroundImage: PImage
+    private lateinit var backgroundImage: PImage
     lateinit var board: Board
     private var backgroundFromCamera: PImage = PImage()
     private var output = openCv.output.flipVerticalImage()
@@ -53,7 +53,7 @@ class CameraHandler(
         for (x in 1..output.width) {
             for (y in 1..output.height) {
                 if (pApplet.brightness(output.get(x, y)) >= 255) {
-                    enemies.filter { it.containsPixel(x, y) }.forEach { touchedEnemiesPixelsMap.put(it, touchedEnemiesPixelsMap[it]?.plus(1)) }
+                    enemies.filter { it.containsPixel(x, y) }.forEach { touchedEnemiesPixelsMap[it] = touchedEnemiesPixelsMap[it]?.plus(1) }
                 }
             }
         }

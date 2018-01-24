@@ -3,7 +3,6 @@ package com.patres.dzarofight.helper
 import com.patres.dzarofight.model.Board
 import com.patres.dzarofight.model.enemy.*
 import processing.core.PVector
-import java.awt.Color
 import java.util.*
 
 
@@ -12,19 +11,16 @@ class RandomGenerator {
         var random = Random()
         fun generateFloat(min: Float = 0f, max: Float): Float = random.nextFloat() * (max - min) + min
         fun generateInt(min: Int = 0, max: Int): Int = random.nextInt((max - min) + 1) + min
-        fun generateColor(): Color = Color(random.nextInt(256 * 256 * 256))
-        fun generateVector(min: Float = 0f, max: Float): PVector = PVector(generateFloat(min, max), generateFloat(min, max))
 
         fun generatePVectorOnBorder(sizeX: Int, sizeY: Int, radius: Float): PVector {
-            val przedzial = (sizeX + sizeY) * 2
-            val leftSideMax = sizeY
-            val rightSideMax = leftSideMax + sizeY
+            val interval = (sizeX + sizeY) * 2
+            val rightSideMax = sizeY + sizeY
             val topSideMax = rightSideMax + sizeX
             val bottomSideMax = topSideMax + sizeX
-            val randomPlace = generateInt(1, przedzial)
+            val randomPlace = generateInt(1, interval)
             return when (randomPlace) {
-                in 0..leftSideMax -> PVector(-radius, generateFloat(max = sizeY.toFloat()))
-                in leftSideMax + 1..rightSideMax -> PVector(sizeX + radius, generateFloat(max = sizeY.toFloat()))
+                in 0..sizeY -> PVector(-radius, generateFloat(max = sizeY.toFloat()))
+                in sizeY + 1..rightSideMax -> PVector(sizeX + radius, generateFloat(max = sizeY.toFloat()))
                 in rightSideMax + 1..topSideMax -> PVector(generateFloat(max = sizeX.toFloat()), -radius)
                 in topSideMax + 1..bottomSideMax -> PVector(generateFloat(max = sizeX.toFloat()), sizeY + radius)
                 else -> throw Exception("Wrong position: $randomPlace in sizeX: $sizeX and sizeY: $sizeY")

@@ -8,9 +8,7 @@ class AudioHandler(
         private val audioInput: AudioInput = minim.getLineIn(Minim.STEREO, 512)
 ) {
 
-    companion object {
-        val volumeLevel = 0.5
-    }
+    private val volumeLevel = 0.5
 
     fun getVolume(): Float = audioInput.mix.level()
 

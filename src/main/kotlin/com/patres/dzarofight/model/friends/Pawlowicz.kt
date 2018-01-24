@@ -28,40 +28,6 @@ class Pawlowicz(
         makeBody(position.x, position.y, Enemy.radius)
     }
 
-    private fun makeBody(x: Float, y: Float, r: Float) {
-        bodyDef = BodyDef().apply {
-            position = box2d.coordPixelsToWorld(x, y)
-            type = BodyType.DYNAMIC
-        }
-
-        val cs = CircleShape().apply {
-            m_radius = box2d.scalarPixelsToWorld(r)
-        }
-        val fd = FixtureDef().apply {
-            shape = cs
-            density = 10f
-            friction = 0.01f
-            restitution = 0.3f
-            filter.categoryBits = FilterMasks.CATEGORY_FRIEND
-            filter.maskBits  = FilterMasks.MASK_FRIEND
-        }
-        body = box2d.world.createBody(bodyDef).apply {
-            createFixture(fd)
-        }
-        body.userData = this
-    }
-
-    fun display() {
-        val scaledX = (position.x) * MainSketch.SCALE_X
-        val scaledY = (position.y) * MainSketch.SCALE_Y
-        pApplet.run {
-            pushMatrix()
-            translate(scaledX, scaledY)
-            image(image, -image.width / 2f, -image.height / 2f)
-            popMatrix()
-        }
-    }
-
     fun killBody() {
         box2d.destroyBody(body)
     }
@@ -98,6 +64,41 @@ class Pawlowicz(
     fun stop() {
         body.apply {
             linearVelocity = Vec2(0f, 0f)
+        }
+    }
+
+
+    private fun makeBody(x: Float, y: Float, r: Float) {
+        bodyDef = BodyDef().apply {
+            position = box2d.coordPixelsToWorld(x, y)
+            type = BodyType.DYNAMIC
+        }
+
+        val cs = CircleShape().apply {
+            m_radius = box2d.scalarPixelsToWorld(r)
+        }
+        val fd = FixtureDef().apply {
+            shape = cs
+            density = 10f
+            friction = 0.01f
+            restitution = 0.3f
+            filter.categoryBits = FilterMasks.CATEGORY_FRIEND
+            filter.maskBits = FilterMasks.MASK_FRIEND
+        }
+        body = box2d.world.createBody(bodyDef).apply {
+            createFixture(fd)
+        }
+        body.userData = this
+    }
+
+    private fun display() {
+        val scaledX = (position.x) * MainSketch.SCALE_X
+        val scaledY = (position.y) * MainSketch.SCALE_Y
+        pApplet.run {
+            pushMatrix()
+            translate(scaledX, scaledY)
+            image(image, -image.width / 2f, -image.height / 2f)
+            popMatrix()
         }
     }
 

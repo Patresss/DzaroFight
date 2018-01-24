@@ -3,7 +3,6 @@ package com.patres.dzarofight.model.popup
 import com.patres.dzarofight.MainSketch
 import com.patres.dzarofight.helper.ColorKeeper
 import com.patres.dzarofight.helper.fill
-import com.patres.dzarofight.helper.stroke
 import com.patres.dzarofight.model.Board
 import processing.core.PApplet
 import processing.core.PImage

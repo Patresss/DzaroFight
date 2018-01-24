@@ -14,8 +14,8 @@ class PolandBall(
         val board: Board,
         val position: PVector = PVector(MainSketch.CAMERA_RESOLUTION_WIDTH / 2f, MainSketch.CAMERA_RESOLUTION_HEIGHT / 2f)
 ) {
-    val baseRadius = 30f
-    var currentRadius = baseRadius
+    private val baseRadius = 30f
+    private var currentRadius = baseRadius
     var hp = 100f
         set(value) {
             if(value <= 0f) {

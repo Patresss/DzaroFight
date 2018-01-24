@@ -11,13 +11,6 @@ fun PApplet.fill(color: Color) {
     this.fill(color.rgb)
 }
 
-fun Color.getContrastColor(): Color {
-    val y = ((299 * this.red + 587 * this.green + 114 * this.blue) / 1000).toDouble()
-    return if (y >= 128) Color.black else Color.white
-}
-
-fun Float.getPositiveOrNegativeValue(): Float = if (this >= 0f) 1f else -1f
-
 fun PImage.flipVerticalImage(): PImage {
     val verticalImage = PImage(this.width, this.height)
     for (w in 0..this.width) {
@@ -37,10 +30,6 @@ fun Float.format(fracDigits: Int): String {
 
 fun PApplet.fill(color: Color, alpha: Float) {
     fill(color.red.toFloat(), color.green.toFloat(), color.blue.toFloat(), alpha)
-}
-
-fun PApplet.stroke(color: Color, alpha: Float) {
-    stroke(color.red.toFloat(), color.green.toFloat(), color.blue.toFloat(), alpha)
 }
 
 fun Vec2.toPVector() = PVector(x, y)
