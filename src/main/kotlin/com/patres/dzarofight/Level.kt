@@ -1,7 +1,7 @@
 package com.patres.dzarofight
 
 enum class Level(
-        val counterLevel: Int,
+        private val counterLevel: Int,
         val pointsToNextLevel: Int,
         val frequencyOfNewEnemy: Int
 ) {

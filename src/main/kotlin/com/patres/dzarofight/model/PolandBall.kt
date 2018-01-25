@@ -14,11 +14,16 @@ class PolandBall(
         val board: Board,
         val position: PVector = PVector(MainSketch.CAMERA_RESOLUTION_WIDTH / 2f, MainSketch.CAMERA_RESOLUTION_HEIGHT / 2f)
 ) {
+
+    val image = board.imageKeeper.polandBallImage
+    private lateinit var body: Body
+    private val box2d = board.box2d
     private val baseRadius = 30f
     private var currentRadius = baseRadius
+    private val pApplet = board.pApplet
     var hp = 100f
         set(value) {
-            if(value <= 0f) {
+            if (value <= 0f) {
                 board.gameMode = ModeGame.LOSE
                 field = 0f
             } else {
@@ -27,11 +32,6 @@ class PolandBall(
                 updateShapeRadius()
             }
         }
-    val pApplet = board.pApplet
-    val image = board.imageKeeper.polandBallImage
-
-    private val box2d = board.box2d
-    private lateinit var body: Body
 
 
     init {
@@ -54,7 +54,6 @@ class PolandBall(
             popMatrix()
         }
     }
-
 
     private fun makeBody(x: Float, y: Float, r: Float) {
         val bd = BodyDef().apply {

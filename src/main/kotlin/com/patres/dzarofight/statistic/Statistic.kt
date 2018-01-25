@@ -4,7 +4,7 @@ import com.patres.dzarofight.model.enemy.*
 
 class Statistic {
 
-    var spendeddMoney = 0
+    private var sandedMoney = 0
 
     var tuskKill = 0
     var petruKill = 0
@@ -21,7 +21,7 @@ class Statistic {
             kijowskiKill * Kijowski.pointsForKill +
             schetynaKill * Schetyna.pointsForKill
 
-    fun getMoney() : Int = getPoints() - spendeddMoney
+    fun getMoney() : Int = getPoints() - sandedMoney
 
 
 }

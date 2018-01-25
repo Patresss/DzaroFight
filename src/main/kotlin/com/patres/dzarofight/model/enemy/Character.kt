@@ -21,7 +21,7 @@ abstract class Character(
         val board: Board,
         val speed: Float = 0.1f,
         val image: PImage,
-        val audioFile: String,
+
         var position: PVector = RandomGenerator.generatePVectorOnBorder(MainSketch.CAMERA_RESOLUTION_WIDTH, MainSketch.CAMERA_RESOLUTION_HEIGHT, radius),
         val positionSpeed: Vec2 = Vec2(0f, 0f),
         val categoryBits:Int,
@@ -34,6 +34,9 @@ abstract class Character(
 
     companion object : CharacterCompanion()
 
+    init {
+        makeBody()
+    }
 
     fun draw() {
         setup()

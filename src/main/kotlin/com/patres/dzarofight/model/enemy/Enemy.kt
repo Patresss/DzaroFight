@@ -10,24 +10,18 @@ import processing.core.PImage
 import processing.core.PVector
 
 
-abstract class Enemy(board: Board, speed: Float = 0.1f, image: PImage, audioFile: String, position: PVector = RandomGenerator.generatePVectorOnBorder(MainSketch.CAMERA_RESOLUTION_WIDTH, MainSketch.CAMERA_RESOLUTION_HEIGHT, radius)) : Character(
+abstract class Enemy(board: Board, speed: Float = 0.1f, image: PImage, val audioFile: String, position: PVector = RandomGenerator.generatePVectorOnBorder(MainSketch.CAMERA_RESOLUTION_WIDTH, MainSketch.CAMERA_RESOLUTION_HEIGHT, radius)) : Character(
         board = board,
         speed = speed,
         image = image,
-        audioFile = audioFile,
         position = position,
         positionSpeed = Vec2((board.polandBall.position.x - position.x) * speed, -(board.polandBall.position.y - position.y) * speed),
         categoryBits = FilterMasks.CATEGORY_ENEMY,
         maskBits = FilterMasks.MASK_ENEMY
 ) {
-
     var alive = true
 
     companion object : CharacterCompanion()
-
-    init {
-        makeBody()
-    }
 
     open fun hurtPolandBall() {
         board.polandBall.hp -= pointsForKill

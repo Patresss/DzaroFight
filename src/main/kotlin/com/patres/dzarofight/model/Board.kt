@@ -26,21 +26,21 @@ class Board(
 ) {
 
     val polandBall = PolandBall(board = this)
-    val bar = Bar(board = this)
     val nextLevelBoard = NextLevelPopup(board = this)
     var losePopup = LosePopup(board = this)
-    var wonPopup = WonPopup(board = this)
-    var enemys = ArrayList<Enemy>()
-    var lastCreationTime = System.currentTimeMillis()
-    var frameSpeedBooster = 60f
     var pause = false
     var gameMode = ModeGame.GAME
     var statistic = Statistic()
     val minim = Minim(pApplet)
     var song: AudioPlayer? = null
-    var level = Level.LEVEL_1
-
     var pawlowicz = Pawlowicz(this)
+    private val bar = Bar(board = this)
+    private var wonPopup = WonPopup(board = this)
+    private var enemys = ArrayList<Enemy>()
+    private var lastCreationTime = System.currentTimeMillis()
+    private var frameSpeedBooster = 60f
+    private var level = Level.LEVEL_1
+
 
     init {
         addNewEnemies(1)

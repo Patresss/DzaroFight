@@ -17,23 +17,23 @@ class Bar(
         val fontSize = min((0.032 * MainSketch.SIZE_Y).toFloat(), (0.0182 * MainSketch.SIZE_X).toFloat())
         val imageSize = min((0.032 * MainSketch.SIZE_Y).toFloat(), (0.0182 * MainSketch.SIZE_X).toFloat())
 
-        val pointsColumn = (0.4 * MainSketch.SIZE_X).toFloat()
-        val killsColumn1Image = (0.69 * MainSketch.SIZE_X).toFloat()
-        val killsColumn1Text = (0.72 * MainSketch.SIZE_X).toFloat()
-        val killsColumn2Image = (0.76 * MainSketch.SIZE_X).toFloat()
-        val killsColumn2Text = (0.79 * MainSketch.SIZE_X).toFloat()
+        const val pointsColumn = (0.4 * MainSketch.SIZE_X).toFloat()
+        const val killsColumn1Image = (0.69 * MainSketch.SIZE_X).toFloat()
+        const val killsColumn1Text = (0.72 * MainSketch.SIZE_X).toFloat()
+        const val killsColumn2Image = (0.76 * MainSketch.SIZE_X).toFloat()
+        const val killsColumn2Text = (0.79 * MainSketch.SIZE_X).toFloat()
 
-        val row1 = (0.037 * MainSketch.SIZE_Y).toFloat()
+        const val row1 = (0.037 * MainSketch.SIZE_Y).toFloat()
         val row1Img = row1 - imageSize * 0.8f
-        val row2 = (0.074 * MainSketch.SIZE_Y).toFloat()
+        const val row2 = (0.074 * MainSketch.SIZE_Y).toFloat()
         val row2Img = row2 - imageSize * 0.8f
-        val row3 = (0.111 * MainSketch.SIZE_Y).toFloat()
+        const val row3 = (0.111 * MainSketch.SIZE_Y).toFloat()
         val row3Img = row3 - imageSize * 0.8f
 
     }
 
-    var position = PVector(0f, 0f)
-    val pApplet = board.pApplet
+    private var position = PVector(0f, 0f)
+    private val pApplet = board.pApplet
     val image = board.imageKeeper.barImage
     private var font: PFont = pApplet.loadFont("fonts/OCRAExtended-30.vlw")
 
@@ -42,7 +42,7 @@ class Bar(
         drawStatistic()
     }
 
-    fun drawStatistic() {
+    private fun drawStatistic() {
         pApplet.textFont(font, fontSize)
         drawPointsStatistic()
         drawKillsStatistic()
@@ -56,7 +56,7 @@ class Bar(
         pApplet.text("Money:  ${board.statistic.getMoney()}", pointsColumn, row3)
     }
 
-    fun drawKillsStatistic() {
+    private fun drawKillsStatistic() {
         pApplet.fill(ColorKeeper.BLOOD, 200f)
 
         pApplet.image(board.imageKeeper.tusk, killsColumn1Image, row1Img, imageSize, imageSize)
