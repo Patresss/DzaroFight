@@ -1,10 +1,9 @@
-package com.patres.dzarofight.model.enemy
+package com.patres.dzarofight.model
 
 import com.patres.dzarofight.MainSketch
-import com.patres.dzarofight.helper.FilterMasks
 import com.patres.dzarofight.helper.RandomGenerator
 import com.patres.dzarofight.helper.toPVector
-import com.patres.dzarofight.model.Board
+import com.patres.dzarofight.model.enemy.Enemy
 import com.patres.dzarofight.statistic.CharacterCompanion
 import org.jbox2d.collision.shapes.CircleShape
 import org.jbox2d.common.Vec2

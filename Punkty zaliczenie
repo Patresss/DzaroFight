@@ -1,12 +1,12 @@
 Opis                                                        Punkty      Etap
-Samodzielna implementacja znanego algorytmu / koncepcji     20          X
-Jeden interaktywny punkt                                    5           X
-Interakcja bazująca na poziomie głośności                   10          X
-Obsługa mikrofonu                                           5           X
-Wzbudzenie ruchu (odjęcie sąsiednich klatek)                10          X
-Odjęcie od pierwszej klatki                                 10          X
-Pad                                                         10          X
-Elementy fizyki                                             10          X
+Samodzielna implementacja znanego algorytmu / koncepcji     20  +        X
+Jeden interaktywny punkt                                    5   +        X
+Interakcja bazująca na poziomie głośności                   10  +        X
+Obsługa mikrofonu                                           5   +        X
+Wzbudzenie ruchu (odjęcie sąsiednich klatek)                10  +        X
+Odjęcie od pierwszej klatki                                 10  +        X
+Pad                                                         10  +        X
+Elementy fizyki                                             10  +        X
 
-Gotowe:     70
-W Planie:   70
+Gotowe:     80
+W Planie:   80

@@ -3,7 +3,7 @@ package com.patres.dzarofight.model.friends
 import com.patres.dzarofight.MainSketch
 import com.patres.dzarofight.helper.FilterMasks
 import com.patres.dzarofight.model.Board
-import com.patres.dzarofight.model.enemy.Character
+import com.patres.dzarofight.model.Character
 import org.jbox2d.common.Vec2
 import processing.core.PVector
 
@@ -11,15 +11,12 @@ class Pawlowicz(
         board: Board)
     : Character(
         board = board,
-        speed = 10f,
+        speed = 30f,
         image = board.imageKeeper.pawlowicz,
         position = PVector(MainSketch.CAMERA_RESOLUTION_WIDTH / 2f, MainSketch.CAMERA_RESOLUTION_HEIGHT * 0.3f),
         categoryBits = FilterMasks.CATEGORY_FRIEND,
         maskBits = FilterMasks.MASK_FRIEND
 ) {
-
-
-
 
     fun moveLeft() {
         body.apply {

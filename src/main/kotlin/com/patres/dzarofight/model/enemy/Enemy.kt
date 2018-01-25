@@ -4,6 +4,7 @@ import com.patres.dzarofight.MainSketch
 import com.patres.dzarofight.helper.FilterMasks
 import com.patres.dzarofight.helper.RandomGenerator
 import com.patres.dzarofight.model.Board
+import com.patres.dzarofight.model.Character
 import com.patres.dzarofight.statistic.CharacterCompanion
 import org.jbox2d.common.Vec2
 import processing.core.PImage

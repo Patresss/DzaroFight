@@ -64,7 +64,7 @@ class MainSketch : PApplet() {
         update()
         cameraHandler.draw()
         board.draw()
-        drawInformation()
+        //drawInformation()
         gamePadHandler.draw()
     }
 

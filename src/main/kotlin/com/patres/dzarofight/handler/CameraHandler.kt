@@ -23,7 +23,7 @@ class CameraHandler(
     lateinit var board: Board
     private var backgroundFromCamera: PImage = PImage()
     private var output = openCv.output.flipVerticalImage()
-    private var acceptableCover: Double = 0.0
+    private var acceptableCover: Double = 0.1
 
     fun setup(board: Board) {
         this.board = board
